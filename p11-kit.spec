@@ -1,11 +1,11 @@
 Summary:	Library and proxy module for properly loading and sharing PKCS#11 modules
 Name:		p11-kit
-Version:	0.14
+Version:	0.19.1
 Release:	1
 License:	BSD
 Group:		Libraries
 Source0:	http://p11-glue.freedesktop.org/releases/%{name}-%{version}.tar.gz
-# Source0-md5:	e8b10a0ef1d9ebc6384ca361a70a4b02
+# Source0-md5:	d96046ab6ac00d005342caf416ed76ab
 URL:		http://p11-glue.freedesktop.org/p11-kit.html
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -47,13 +47,14 @@ API and internal documentation for P11-KIT library.
 
 %build
 %{__libtoolize}
-%{__aclocal} -I m4
+%{__aclocal}
 %{__autoheader}
 %{__automake}
 %{__autoconf}
 %configure \
-	--disable-silent-rules \
-	--with-html-dir=%{_gtkdocdir}
+	--disable-silent-rules		\
+	--with-html-dir=%{_gtkdocdir}	\
+	--with-trust-paths=/etc/certs/ca-certificates.crt
 %{__make}
 
 %install
@@ -63,6 +64,10 @@ install -d $RPM_BUILD_ROOT%{_sysconfdir}/pkcs11/modules
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
+%{__rm} $RPM_BUILD_ROOT%{_libdir}/libp11-kit.la
+%{__rm} $RPM_BUILD_ROOT%{_libdir}/pkcs11/*.la
+%{__mv} $RPM_BUILD_ROOT%{_sysconfdir}/pkcs11/pkcs11.conf{.example,}
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
@@ -71,11 +76,19 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc AUTHORS COPYING ChangeLog NEWS README p11-kit/pkcs11.conf.example
+%doc AUTHORS COPYING ChangeLog NEWS README
 %attr(755,root,root) %{_bindir}/p11-kit
 %attr(755,root,root) %{_libdir}/p11-kit-proxy.so
+
 %dir %{_sysconfdir}/pkcs11
 %dir %{_sysconfdir}/pkcs11/modules
+%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/pkcs11/pkcs11.conf
+
+%dir %{_libdir}/p11-kit
+%dir %{_libdir}/pkcs11
+%attr(755,root,root) %{_libdir}/pkcs11/p11-kit-trust.so
+%attr(755,root,root) %{_libdir}/p11-kit/p11-kit-extract-trust
+%{_datadir}/p11-kit/modules/p11-kit-trust.module
 
 %files libs
 %defattr(644,root,root,755)

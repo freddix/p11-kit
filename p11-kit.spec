@@ -1,11 +1,11 @@
 Summary:	Library and proxy module for properly loading and sharing PKCS#11 modules
 Name:		p11-kit
-Version:	0.20.2
-Release:	3
+Version:	0.22.1
+Release:	1
 License:	BSD
 Group:		Libraries
 Source0:	http://p11-glue.freedesktop.org/releases/%{name}-%{version}.tar.gz
-# Source0-md5:	757b97ee4ac0ce598661a90cd784c4f1
+# Source0-md5:	4e9bea1106628ffb820bdad24a819fac
 URL:		http://p11-glue.freedesktop.org/p11-kit.html
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -90,6 +90,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %attr(755,root,root) %{_bindir}/trust
 %attr(755,root,root) %{_libdir}/pkcs11/p11-kit-trust.so
+%attr(755,root,root) %{_libdir}/p11-kit/p11-kit-remote
 %attr(755,root,root) %{_libdir}/p11-kit/trust-extract-compat
 %{_datadir}/p11-kit/modules/p11-kit-trust.module
 

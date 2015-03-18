@@ -1,11 +1,11 @@
 Summary:	Library and proxy module for properly loading and sharing PKCS#11 modules
 Name:		p11-kit
-Version:	0.22.1
+Version:	0.23.1
 Release:	1
 License:	BSD
 Group:		Libraries
 Source0:	http://p11-glue.freedesktop.org/releases/%{name}-%{version}.tar.gz
-# Source0-md5:	4e9bea1106628ffb820bdad24a819fac
+# Source0-md5:	96f073270c489c9a594e1c9413f42db8
 URL:		http://p11-glue.freedesktop.org/p11-kit.html
 BuildRequires:	autoconf
 BuildRequires:	automake
